@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadeau pour Stella</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap">
+  <!-- FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ffd1dc 0%, #ffe6eb 40%, #ffc3a0 100%);
+      min-height: 100vh;
+    }
+    
+    .font-handwriting {
+      font-family: 'Caveat', cursive;
+    }
+
+    /* Floating background items animation */
+    .bg-heart {
+      position: absolute;
+      color: rgba(255, 182, 193, 0.4);
+      animation: float 8s infinite ease-in-out;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(10deg); }
+    }
+
+    /* Pulse animation for the giant glowing heart */
+    @keyframes glowPulse {
+      0% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(244, 63, 94, 0.6)); }
+      50% { transform: scale(1.18); filter: drop-shadow(0 0 30px rgba(244, 63, 94, 0.9)); }
+      100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(244, 63, 94, 0.6)); }
+    }
+
+    .heart-glow {
+      animation: glowPulse 1.6s infinite ease-in-out;
+    }
+
+    /* Custom Scrollbar for letter */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #f43f5e;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center p-4 relative overflow-x-hidden">
+
+
+  <audio id="bg-music" src="musique.mp3" loop preload="auto"></audio>
+
+  <!-- Floating Audio Control Button (Top Right) -->
+  <button id="music-btn" onclick="toggleAudio()" class="fixed top-5 right-5 z-50 bg-white/80 backdrop-blur-md hover:bg-white text-rose-500 p-3.5 rounded-full shadow-lg border border-rose-200 transition-all duration-300 transform hover:scale-110 flex items-center justify-center cursor-pointer">
+    <i id="music-icon" class="fas fa-music text-xl"></i>
+  </button>
+
+  <main class="w-full max-w-2xl bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border border-white/60 p-6 sm:p-10 relative z-10 transition-all duration-500 my-8">
+    
+    <!-- Title Header -->
+    <header class="text-center mb-6">
+      <h1 class="text-4xl sm:text-5xl font-bold font-handwriting text-rose-600 drop-shadow-sm mb-2">
+        Cadeau pour Stella 💖
+      </h1>
+      <p id="sub-title" class="text-slate-500 text-sm sm:text-base font-medium">
+        J'ai préparé ce petit mot juste pour toi...
+      </p>
+    </header>
+
+    <div id="teaser-section" class="text-center py-8 flex flex-col items-center justify-center">
+      <div class="w-24 h-24 mb-6 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center shadow-inner text-4xl animate-bounce">
+        💌
+      </div>
+      <button onclick="openLetter()" class="group relative inline-flex items-center justify-center px-8 py-4 font-semibold text-white transition-all duration-300 bg-gradient-to-r from-rose-500 to-pink-500 rounded-full shadow-lg hover:shadow-rose-500/40 hover:scale-105 active:scale-95 text-lg cursor-pointer">
+        <span>Ouvrir ton mot 💖</span>
+        <i class="fas fa-heart ml-2 transition-transform duration-300 group-hover:scale-125"></i>
+      </button>
+    </div>
+
+    <div id="letter-section" class="hidden opacity-0 transition-opacity duration-1000">
+      
+      <!-- Glowing Animated Heart -->
+      <div class="flex justify-center my-6">
+        <div class="heart-glow text-6xl sm:text-7xl text-rose-500 select-none">
+          
+        </div>
+      </div>
+
+      <!-- Letter Content Box -->
+      <article class="bg-rose-50/70 border border-rose-100 rounded-2xl p-6 sm:p-8 text-slate-700 leading-relaxed space-y-4 text-sm sm:text-base shadow-inner max-h-[60vh] overflow-y-auto custom-scrollbar">
+        
+        <p class="font-bold text-rose-600 text-base sm:text-lg">Pour ma meilleure amie 💖</p>
+
+        <p>Si tu lis ce message, c’est que j’ai réussi à faire ta surprise, donc profite ma copine adorée, bisous 💖</p>
+
+        <p>Par où commencer… honnêtement si on m’avait dit en mars dernier « ouais Stella elle va devenir meilleure amie avec toi » et ben je te promets que j’y aurais jamais cru.</p>
+
+        <p>Je sais pas comment toi tu as pu te dire "Louca c’est un garçon bien" etc. car je devais pas faire cette impression-là de base je suppose !</p>
+
+        <p>Je sais que en ce moment ça va pas trop, donc je vais essayer de te faire oublier un peu ça à travers ce texte.<br>
+        Oui j’avoue que ces 2 derniers mois j’étais beaucoup moins présent pour toi et je m’en veux beaucoup, mais je vais essayer de me rattraper.</p>
+
+        <p>Tellement de mots et d'adjectifs pour te décrire, tels que : gentille, mignonne, belle, attentionnée, intelligente, cultivée</span> (surtout sur Avignon, je suis encore choqué de la perf !), avec un grand cœur, remplie d’amour à donner, toujours là pour les autres... enfin voilà, la liste est encore bien plus longue !</p>
+
+        <p>Juste je veux que tu saches que moi je serai toujours là pour toi, de près comme de loin, et je t’aime de fou ma copine, t’as même pas idée 💖</p>
+
+        <p>Juste ne change pas, reste ma petite Stella adorée que j’aime et que j’ai rencontrée avec toutes tes qualités et tes moments de folie, et profite de ceux qui sont autour de toi et qui t’aiment.</p>
+
+        <p class="text-right text-2xl sm:text-3xl text-rose-600 font-bold pt-4">
+          Bisouuuuus 😘
+        </p>
+      </article>
+    </div>
+
+  </main>
+
+  <script>
+    const audio = document.getElementById('bg-music');
+    const musicIcon = document.getElementById('music-icon');
+    let isPlaying = false;
+
+    // Toggle audio manually
+    function toggleAudio() {
+      if (isPlaying) {
+        audio.pause();
+        musicIcon.className = 'fas fa-music text-xl text-slate-400';
+        isPlaying = false;
+      } else {
+        audio.play().then(() => {
+          musicIcon.className = 'fas fa-volume-up text-xl text-rose-500 animate-pulse';
+          isPlaying = true;
+        }).catch(err => console.log('Audio autoplay blocked:', err));
+      }
+    }
+
+    // Trigger full opening experience
+    function openLetter() {
+      // 1. Play music
+      if (!isPlaying) {
+        toggleAudio();
+      }
+
+      // 2. Confetti Explosion
+      const count = 200;
+      const defaults = { origin: { y: 0.7 } };
+
+      function fire(particleRatio, opts) {
+        confetti(Object.assign({}, defaults, opts, {
+          particleCount: Math.floor(count * particleRatio)
+        }));
+      }
+
+      fire(0.25, { spread: 26, startVelocity: 55, colors: ['#f43f5e', '#fb7185'] });
+      fire(0.2, { spread: 60, colors: ['#ffffff', '#ffe4e6'] });
+      fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+      fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, colors: ['#f43f5e', '#fda4af'] });
+      fire(0.1, { spread: 120, startVelocity: 45 });
+
+      // 3. UI Transition
+      const teaser = document.getElementById('teaser-section');
+      const letter = document.getElementById('letter-section');
+      const subTitle = document.getElementById('sub-title');
+
+      teaser.style.display = 'none';
+      subTitle.textContent = 'Un message rempli d\'amour ✨';
+
+      letter.classList.remove('hidden');
+      setTimeout(() => {
+        letter.classList.remove('opacity-0');
+      }, 50);
+    }
+  </script>
+</body>
+</html>
